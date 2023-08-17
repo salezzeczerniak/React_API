@@ -1,0 +1,68 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --branco: #FFFFFF;
+    --rosa: #C12D6D;
+    --azul: #0C7EAE;
+    --azulP: #060821;
+    --azulC: #182246;
+
+    --font1: 'Righteous', cursive;
+    --font2: 'Titillium Web', sans-serif;
+}
+
+#Home-main  .servicos {
+    padding-bottom: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#Home-main  .servicos h2 {
+    margin-bottom: 100px;
+}
+
+#Home-main  .servicos_cards {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#Home-main  .card {
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    font-style: italic;
+    width: 48%;
+    max-width: 430px;
+    height: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 80px 5% 50px 5%;
+    color: var(--branco);
+    background-color: var(--azulC);
+    box-shadow: 0px 10px 15px #000000;
+    text-align: center;
+}
+
+#Home-main  .card img {
+    position: absolute;
+    top: -30px;
+    width: 120px;
+}
+
+#Home-main  .card p {
+    font-size: 18px;
+}
+
+#Home-main  .servicos a {
+    margin-top: 30px;
+    font-size: 18px;
+    font-family: var(--font2);
+    color: var(--azulC);
+}
