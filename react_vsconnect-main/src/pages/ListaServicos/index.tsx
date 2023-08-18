@@ -1,48 +1,33 @@
 import "./style.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import CardServ from "../../components/CardServ";
+
+import api from "../../utils/api";
 
 export default function ListaServicos() {
 
 
 
-    const [servs, setServs] = useState<any[]>([
-
-
-        {
-            titulo: "Desenvolvimento de site institucional - Gateway de Pagamento / Fintech",
-            valor: "R$ 1300,00",
-            descricao: "Desenvolver um site responsivo que seja utilizado como uma plataforma de apresentação do nosso gateway de pagamento. O objetivo principal deste projeto é criar um site atraente e informativo, que demonstre as funcionalidades e benefícios do nosso gateway de pagamento para potenciais clientes.",
-            skills: ["HTML", "CSS", "REACT", "JAVA"]
-        },
-        {
-            titulo: "ChatBot para a minha Pizzaria",
-            valor: "R$ 2400,00",
-            descricao: "Necessito de uma automação e filtro para que o cliente seja direcionado corretamente para o setor de vendas, com a atendente que estiver disponível",
-            skills: ["PYTHON", "KOTHIN", "JAVA"]
-        },
-        {
-            titulo: "Logística",
-            valor: "R$ 1500,00",
-            descricao: "Preciso fazer um software que eu consiga consultar as movimentações do meu estoque em tempo real",
-            skills: ["PYTHON", "C"]
-        }
-
-    ]);
+    const [servs, setServs] = useState<any[]>([]);
 
     const [skillDigitada, setSkillDigitada] = useState<string>("");
 
     const [listaDevsFiltrados, setListaDevsFiltrados] = useState<any[]>(servs);
 
+    useEffect(() =>{
+        document.title = "Lista Servicos - VSConnect"
+        listarServicos()
+    }, [] )
+
     function buscarPorSkill(event: any){
         event.preventDefault();
 
-        const devsFiltrados = servs.filter((dev: any) => dev.skills.includes(skillDigitada.toLocaleUpperCase()));
+        const servFiltrados = servs.filter((serv: any) => serv.hardSkills.includes(skillDigitada.toLocaleUpperCase()));
 
-        if(devsFiltrados.length === 0){
+        if(servFiltrados.length === 0){
             alert("Nenhum serviço com essa skill")
         }else{
-            setListaDevsFiltrados(devsFiltrados)
+            setListaDevsFiltrados(servFiltrados)
         }
     }
 
@@ -53,6 +38,13 @@ export default function ListaServicos() {
         setSkillDigitada(event.target.value)
     }
 
+    function listarServicos(){
+        api.get("servicos").then((response: any) =>{
+            console.log(response.data)
+            setServs(response.data)
+
+        })
+    }
 
     return (
         <main id="lista-servicos">
@@ -71,13 +63,13 @@ export default function ListaServicos() {
                         </form>
                         <div className="wrapper_lista">
                             <ul>
-                            {listaDevsFiltrados.map((serv: any, index: number) => {
-                                    return <li>
+                            {servs.map((serv: any, index: number) => {
+                                    return <li key={index}>
                                           <CardServ 
-                                          titulo={serv.titulo}
+                                          titulo={serv.nome}
                                           valor={serv.valor}
                                           descricao={serv.descricao}
-                                          techs={serv.skills}
+                                          techs={serv.techs}
                                            />
                                     </li>
                                 }
