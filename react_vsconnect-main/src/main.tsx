@@ -11,6 +11,7 @@ import CadastroDev from './pages/CadastroDev'
 import CadastroServ from './pages/CadastroServ'
 import Login from './pages/Login'
 import ListaDevs from '././pages/ListaDevs'
+import PerfilUsuario from './pages/PerfillUsuario'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -23,6 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path='cadastroserv' element={ < CadastroServ />} />
         <Route path='login' element={ < Login />} />
         <Route path='listadevs' element={ < ListaDevs />} />
+        <Route path= 'perfil/:idUsuario' element = { <PerfilUsuario />} /> 
       </Routes>
       <Footer />
       

@@ -1,31 +1,60 @@
 //rotas
-import { Link } from "react-router-dom";
+import { Link , useParams} from "react-router-dom";
 
 //hooks
+import { useState,useEffect } from "react";
 
 //estilização
 import "./style.css";
 
+import api from "../../utils/api";
 
 
 function PerfilUsuario() {
 
 
+    const {idUsuario} = useParams();
+
+    const [nome, setNome] = useState<string>("")
+    const [foto, setFoto] = useState<string>("")
+    const [email, setEmail] = useState<string>("")
+    const [uf, setUf] = useState<string>("")
+    const [cidade, setCidade] = useState<string>("")
+    const [listaSkills , setListaSkills] = useState<string[]>([])
+
+    function buscarUsuarioPorId() {
+        api.get("users/" + idUsuario).then((response:any) => {
+            setNome(response.data.nome)
+            setFoto(response.data.user_img)
+            setEmail(response.data.email)
+            setUf(response.data.uf)
+            setCidade(response.data.cidade)
+            setListaSkills(response.data.hardSkills)
+        }).catch((error) =>{
+            console.log(error)
+        })
+    }
+    
+    useEffect(() =>{
+        document.title = "Perfil de " + nome + " - VSConnect"
+        buscarUsuarioPorId()
+    }, [] )
+
     return (
         <main id="main_perfilusuario">
             <div className="container container_perfil_dev">
                 <div className="perfil_dev_conteudo">
-                    <h1>Página de Perfil - Thiago Nascimento</h1>
+                    <h1>Página de Perfil - { nome }</h1>
 
                     <div className="topo_dev">
-                        <img src={"https://github.com/Thiago-Nascimento.png"} alt={"Foto de perfil de Thiago Nascimento"} />
-                        <h2>Thiago Nascimento</h2>
+                        <img src={"http://localhost:3000/static/" + foto} alt={"Foto de perfil de" + nome} />
+                        <h2>{nome}</h2>
                     </div>
 
                     <div className="contato_local">
                         <div className="contato">
-                            <p>Email para contato: </p>
-                            <Link to={"mailto:thiago@email.com"}>thiago@email.com</Link>
+                            <p>{email}</p>
+                            <Link to={"mailto:" + {email}}>{email}</Link>
                         </div>
                         <div className="local"> 
                             <svg
@@ -36,18 +65,21 @@ function PerfilUsuario() {
                                     d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"
                                 />
                             </svg>
-                            <p>De: Suzano - SP</p>
+                            <p>De: + {cidade} - {uf}</p>
                         </div>
                     </div>
 
                     <div className="techs">
                         <p>Tecnologias principais: </p>
                         <div className="lista_skills">
-                            <span>HTML</span>
-                            <span>CSS</span>
-                            <span>React</span>
-                        </div>
-                    </div>
+                            {
+                                // O map declara que tipo de coisa está dentro dessa lista (Fazer alguma coisa para cada item dessa lista)
+                              listaSkills.map((skill:any, index:number) => {
+                                return <span key={index}>{skill} </span>
+                              })
+                            }
+                            </div>
+                    </div>        
                     <footer>
                         <Link to={"#"}>
                             <svg xmlns="http://www.w3.org/2000/svg"
