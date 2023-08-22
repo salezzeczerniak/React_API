@@ -66,6 +66,7 @@ export default function ListaServicos() {
                             {servs.map((serv: any, index: number) => {
                                     return <li key={index}>
                                           <CardServ 
+                                            id = {serv.id}
                                           titulo={serv.nome}
                                           valor={serv.valor}
                                           descricao={serv.descricao}

@@ -219,3 +219,8 @@ main#lista-servicos {
     color: white;
     font-weight: 600;
 }
+
+#lista-servicos .link{
+    text-decoration: none;
+    color: var(--branco);
+}
